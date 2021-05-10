@@ -10,10 +10,9 @@ from kivy.clock import Clock
 import json, glob
 from datetime import datetime
 from pathlib import Path
-import transactions
 
 Builder.load_file('design.kv')
-
+list_rv = None
 class RootWidget(ScreenManager):
     screen_home = ObjectProperty(None)
     screen_add = ObjectProperty(None)
@@ -44,39 +43,39 @@ class SignUpScreenSuccess(Screen):
     def go_to_login(self):
         self.manager.transition.direction = 'right'
         self.manager.current = "screen_home"
-class AddNewForm(Widget):
+
+class Add(Screen):
     def submit_input(self, type, price, comment):
+        self.manager.transition.direction = 'right'
+        self.manager.current = "screen_home"
         with open("transactions.json", 'r') as file:
             data = json.load(file)
 
         data += [{'type': type, 'price': price,
-                            'comment': comment}]
+                            'comment': comment, 'date': datetime.now().strftime("%Y-%m-%d %H-%M-%S")}]
         with open("transactions.json", 'w') as file:
             json.dump(data, file)
-        self.manager.current = "screen_home"
 
 
-#menu
-class Menu(BoxLayout):
-    manager = ObjectProperty(None)
 
-#recycle view for home screen
 class MyRecycleView(RecycleView):
-
     def __init__(self, **kwargs):
         super(MyRecycleView, self).__init__(**kwargs)
         self.load_data()
-        print(self.load_data)
+        Clock.schedule_interval(self.load_data, 1)
+
     def load_data(self, *args):
         with open("transactions.json", 'r') as file:
             data = json.load(file)
-        list_data = []
-        list_data.append({'text' : 'type' + "                " +'price' + "                   " +'comment'})
+        list_data = [] 
+        list_data.append({'text' : 'type' + "                           " +
+         "date" + "                                  "+'price'  
+         + "                          " +'comment'})
         for item in data:
-            list_data.append({'text' : item['type'] + "                " + item['price'] + "                   " + item['comment']})
-
+            list_data.append({'text' : item['type'] + "                   " +
+             item['date'] + "                    " + 
+             item['price'] + "                    " + item['comment']})
         self.data = list_data
-
 
 class HomeScreen(Screen):
     pass

@@ -1,5 +1,4 @@
-
-<AddNewForm>:
+<Add>:
     BoxLayout:
         cols: 1
         GridLayout:
@@ -20,13 +19,17 @@
                 pos: root.center_x - 220, 100
                 size: 400,50
                 hint_text: "Comment"
-            
-            Button:
-                size: 130,40
-                pos: root.center_x - 100, 50
-                text: 'Submit'
-                on_release: root.submit_input(type.text,price.text,comment.text)
-        
+            GridLayout:
+                cols: 2
+                size_hint: 0.2, 0.2
+                padding: 10, 10
+                spacing: 10, 0
+                Button:
+                    text: 'Submit'
+                    on_press: root.submit_input(type.text,price.text,comment.text)
+                Button:
+                    text: 'Back'
+                    on_press: root.manager.current = 'screen_home'
 
 <HomeScreen>:
     GridLayout:
@@ -52,8 +55,10 @@
         BoxLayout:
             orientation: "vertical"
             MyRecycleView:
+                id:my_recycleview
 
 <MyRecycleView>:
+    id: "rv"
     viewclass: 'Label'
     RecycleBoxLayout:
         color: 1,1,1,1
@@ -62,6 +67,7 @@
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+        
     
 
 <AddScreen>:
@@ -151,5 +157,5 @@
         name: "sign_up_screen_success"
     HomeScreen:
         name: 'screen_home'
-    AddScreen:
+    Add:
         name: 'screen_add'
