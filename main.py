@@ -76,6 +76,44 @@ class MyRecycleView(RecycleView):
              item['date'] + "                    " + 
              item['price'] + "                    " + item['comment']})
         self.data = list_data
+class MyRecycleViewSpent(RecycleView):
+    def __init__(self, **kwargs):
+        super(MyRecycleViewSpent, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        with open("transactions.json", 'r') as file:
+            data = json.load(file)
+        list_data = [] 
+        list_data.append({'text' : 'type' + "                           " +
+         "date" + "                                  "+'price'  
+         + "                          " +'comment'})
+        for item in data:
+            if(item['type'] == "spent"):
+                list_data.append({'text' : item['type'] + "                   " +
+                item['date'] + "                    " + 
+                item['price'] + "                    " + item['comment']})
+        self.data = list_data
+class MyRecycleViewReceived(RecycleView):
+    def __init__(self, **kwargs):
+        super(MyRecycleViewReceived, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        with open("transactions.json", 'r') as file:
+            data = json.load(file)
+        list_data = [] 
+        list_data.append({'text' : 'type' + "                           " +
+         "date" + "                                  "+'price'  
+         + "                          " +'comment'})
+        for item in data:
+            if(item['type'] == "received"):
+                list_data.append({'text' : item['type'] + "                   " +
+                item['date'] + "                    " + 
+                item['price'] + "                    " + item['comment']})
+        self.data = list_data
 
 class HomeScreen(Screen):
     pass
@@ -86,6 +124,10 @@ class AddScreen(Screen):
         super(AddScreen, self).__init__(**kwargs)
         self.addNewForm = AddNewForm()
         self.add_widget(self.addNewForm)
+class SpentScreen(Screen):
+    pass
+class ReceivedScreen(Screen):
+    pass
 
 
 
