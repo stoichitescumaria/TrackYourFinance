@@ -215,7 +215,7 @@
     GridLayout:
         cols: 1
         Label:
-            text: "Sign up for a space Journey!"
+            text: "Create your account"
         TextInput:
             id: username
             hint_text: "Username"
@@ -234,7 +234,7 @@
             text: "Sign up successful!"
         Button:
             text: "Login Page"
-            on_press: root.go_to_login()
+            on_press: root.manager.current = "login_screen"
 
 <RootWidget>:
     LoginScreen:
