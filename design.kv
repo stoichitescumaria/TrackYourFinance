@@ -1,35 +1,51 @@
-<Add>:
-    BoxLayout:
+<AddScreen>:
+    padding: 100,100,100,100
+    spacing: 50
+    GridLayout:
         cols: 1
         GridLayout:
-            TextInput:
-                id: type
-                pos: root.center_x - 220, 300
-                size: 400,50
-                hint_text: "Type"
+            cols: 1
+            padding: 5, 5
+            spacing: 5, 5
+            RelativeLayout:
+                TextInput:
+                    id: type
+                    size_hint: 0.5, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    hint_text: "Type"
 
-            TextInput:
-                id: price
-                pos: root.center_x - 220, 200
-                size: 400,50
-                hint_text: "Price"
+            RelativeLayout:
+                TextInput:
+                    id: price
+                    size_hint: 0.5, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    hint_text: "Price"
 
-            TextInput:
-                id: comment
-                pos: root.center_x - 220, 100
-                size: 400,50
-                hint_text: "Comment"
-            GridLayout:
-                cols: 2
-                size_hint: 0.2, 0.2
-                padding: 10, 10
-                spacing: 10, 0
-                Button:
-                    text: 'Submit'
-                    on_press: root.submit_input(type.text,price.text,comment.text)
-                Button:
-                    text: 'Back'
-                    on_press: root.manager.current = 'screen_home'
+            RelativeLayout:
+                TextInput:
+                    id: comment
+                    size_hint: 0.5, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    hint_text: "Comment"
+        GridLayout:
+            cols: 2
+            size_hint: 0.2, 0.2
+            padding: 10, 10
+            spacing: 10, 0
+            allow_strech: True
+            
+            Button:
+                text: 'Submit'
+                on_press: root.submit_input(type.text,price.text,comment.text)
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1, 1
+            Button:
+                text: 'Back'
+                on_press: root.manager.current = 'screen_home'
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1, 1
 
 <HomeScreen>:
     GridLayout:
@@ -39,6 +55,8 @@
             top: 0
             ActionView:
                 ActionPrevious:
+                    text: 'logout'
+                    on_press: root.manager.current = 'login_screen'
                 ActionButton:
                     text: 'Home'
                     on_press: root.manager.current = 'screen_home'
@@ -65,6 +83,8 @@
             top: 0
             ActionView:
                 ActionPrevious:
+                    text: 'home'
+                    on_press: root.manager.current = 'screen_home'
                 ActionButton:
                     text: 'Home'
                     on_press: root.manager.current = 'screen_home'
@@ -111,6 +131,8 @@
             top: 0
             ActionView:
                 ActionPrevious:
+                    text: 'home'
+                    on_press: root.manager.current = 'screen_home'
                 ActionButton:
                     text: 'Home'
                     on_press: root.manager.current = 'screen_home'
@@ -138,10 +160,6 @@
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'    
-
-<AddScreen>:
-    BoxLayout:
-
 
 <LoginScreen>:
     padding: 100,100,100,100
@@ -218,7 +236,6 @@
             text: "Login Page"
             on_press: root.go_to_login()
 
-
 <RootWidget>:
     LoginScreen:
         name: "login_screen"
@@ -228,7 +245,7 @@
         name: "sign_up_screen_success"
     HomeScreen:
         name: 'screen_home'
-    Add:
+    AddScreen:
         name: 'screen_add'
     SpentScreen:
         name: 'screen_spent'

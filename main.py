@@ -44,19 +44,18 @@ class SignUpScreenSuccess(Screen):
         self.manager.transition.direction = 'right'
         self.manager.current = "screen_home"
 
-class Add(Screen):
+class AddScreen(Screen):
     def submit_input(self, type, price, comment):
         self.manager.transition.direction = 'right'
         self.manager.current = "screen_home"
         with open("transactions.json", 'r') as file:
             data = json.load(file)
-
-        data += [{'type': type, 'price': price,
-                            'comment': comment, 'date': datetime.now().strftime("%Y-%m-%d %H-%M-%S")}]
+        print(type);
+        if (((type == "spent") or (type ==  "received")) and not(price == "")):
+            data += [{'type': type, 'price': price,
+                                'comment': comment, 'date': datetime.now().strftime("%Y-%m-%d %H-%M-%S")}]
         with open("transactions.json", 'w') as file:
             json.dump(data, file)
-
-
 
 class MyRecycleView(RecycleView):
     def __init__(self, **kwargs):
@@ -76,6 +75,7 @@ class MyRecycleView(RecycleView):
              item['date'] + "                    " + 
              item['price'] + "                    " + item['comment']})
         self.data = list_data
+
 class MyRecycleViewSpent(RecycleView):
     def __init__(self, **kwargs):
         super(MyRecycleViewSpent, self).__init__(**kwargs)
@@ -95,6 +95,7 @@ class MyRecycleViewSpent(RecycleView):
                 item['date'] + "                    " + 
                 item['price'] + "                    " + item['comment']})
         self.data = list_data
+
 class MyRecycleViewReceived(RecycleView):
     def __init__(self, **kwargs):
         super(MyRecycleViewReceived, self).__init__(**kwargs)
@@ -118,18 +119,10 @@ class MyRecycleViewReceived(RecycleView):
 class HomeScreen(Screen):
     pass
 
-
-class AddScreen(Screen):
-    def __init__(self, **kwargs):
-        super(AddScreen, self).__init__(**kwargs)
-        self.addNewForm = AddNewForm()
-        self.add_widget(self.addNewForm)
 class SpentScreen(Screen):
     pass
 class ReceivedScreen(Screen):
     pass
-
-
 
 class MainApp(App):
 
